@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ОКН - Каменск-Уральский</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <div class="okn-logo">ОКН</div>
+                <div class="city-info">
+                    <h1 class="city-name">КАМЕНСК-УРАЛЬСКИЙ</h1>
+                    <p class="foundation-year">1682 год основания</p>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main">
+            <div class="left-panel">
+                <div class="total-stats">
+                    <div class="total-number" id="totalObjects">131</div>
+                    <div class="total-label">объект культурного наследия</div>
+                </div>
+                <div class="view-buttons">
+                    <button class="view-btn" id="mapView">На карте</button>
+                    <button class="view-btn active" id="listView">Списком</button>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="filter-section">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="condition">Состояние</button>
+                        <button class="filter-tab" data-filter="material">Материал</button>
+                    </div>
+                    
+                    <div class="legend" id="conditionLegend">
+                        <div class="legend-item">
+                            <div class="legend-color good"></div>
+                            <span class="legend-text">Хорошее</span>
+                            <span class="legend-count" id="goodCount">11</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color normal"></div>
+                            <span class="legend-text">Нормальное</span>
+                            <span class="legend-count" id="normalCount">23</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color bad"></div>
+                            <span class="legend-text">Плохое</span>
+                            <span class="legend-count" id="badCount">16</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color ruins"></div>
+                            <span class="legend-text">Руины</span>
+                            <span class="legend-count" id="ruinsCount">2</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color not-exists"></div>
+                            <span class="legend-text">Не существует</span>
+                            <span class="legend-count" id="notExistsCount">5</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="objects-grid" id="objectsGrid">
+                    <!-- Объекты будут добавлены через JavaScript -->
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Загрузка данных...</p>
+            </div>
+            
+            <div class="error" id="error" style="display: none;">
+                <div class="error-icon">⚠️</div>
+                <p>Ошибка загрузки данных</p>
+                <button class="retry-btn" onclick="loadData()">Повторить</button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
