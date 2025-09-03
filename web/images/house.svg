@@ -1,0 +1,11 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Крыша -->
+  <path d="M15 6 L25 16 L23 16 L23 25 L7 25 L7 16 L5 16 Z" fill="currentColor"/>
+  <!-- Окна (вырезы в стенах) -->
+  <rect x="9" y="17" width="3" height="3" fill="white" opacity="0.3"/>
+  <rect x="18" y="17" width="3" height="3" fill="white" opacity="0.3"/>
+  <!-- Дверь -->
+  <rect x="13" y="20" width="4" height="5" fill="white" opacity="0.3"/>
+  <!-- Дымоход -->
+  <rect x="19" y="10" width="1.5" height="6" fill="currentColor"/>
+</svg>

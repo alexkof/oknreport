@@ -1,0 +1,15 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Основное полотно моста -->
+  <rect x="2" y="18" width="26" height="3" fill="currentColor"/>
+  <!-- Опоры моста -->
+  <rect x="6" y="15" width="2" height="6" fill="currentColor"/>
+  <rect x="14" y="15" width="2" height="6" fill="currentColor"/>
+  <rect x="22" y="15" width="2" height="6" fill="currentColor"/>
+  <!-- Арочные пролеты -->
+  <path d="M2 18 Q9 14 16 18" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M14 18 Q21 14 28 18" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Перила -->
+  <rect x="2" y="16" width="26" height="1" fill="currentColor"/>
+  <!-- Основание моста -->
+  <rect x="0" y="21" width="30" height="1" fill="currentColor"/>
+</svg>

@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каменск-Уральский - Культурное наследие</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Заголовок */
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .okn-logo {
+            font-size: 120px;
+            font-weight: 900;
+            color: #d32f2f;
+            margin-right: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(45deg, #c62828, #f44336);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-block {
+            flex: 1;
+        }
+
+        .title {
+            font-size: 72px;
+            font-weight: 900;
+            color: #1a1a1a;
+            line-height: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .quote-mark {
+            color: #2196f3;
+            font-size: 72px;
+            margin-right: 20px;
+        }
+
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            gap: 40px;
+        }
+
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .stats-block {
+            margin-bottom: 30px;
+        }
+
+        .stats-number {
+            font-size: 72px;
+            font-weight: 900;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .stats-text {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .view-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn.active {
+            background: #2196f3;
+            color: white;
+            border-color: #2196f3;
+        }
+
+        .btn:hover {
+            background: #f5f5f5;
+        }
+
+        .btn.active:hover {
+            background: #1976d2;
+        }
+
+        /* Фильтры состояния */
+        .filters {
+            margin-bottom: 30px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border-radius: 16px;
+            border: 1px solid #ddd;
+            background: white;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1976d2;
+        }
+
+        .status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-count {
+            margin-left: 4px;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+
+        .good { background: #4caf50; }
+        .normal { background: #ff9800; }
+        .bad { background: #f44336; }
+        .ruins { background: #795548; }
+        .none { background: #9e9e9e; }
+
+        /* Карта с иконками */
+        .map-container {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .timeline {
+            margin-bottom: 20px;
+        }
+
+        .period {
+            margin-bottom: 25px;
+        }
+
+        .period-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .icons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .heritage-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .heritage-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Цвета иконок по состоянию */
+        .icon-good { background: #4caf50; }
+        .icon-normal { background: #ff9800; }
+        .icon-bad { background: #f44336; }
+        .icon-ruins { background: #795548; }
+        .icon-none { background: #9e9e9e; }
+
+        /* Типы зданий - SVG иконки */
+        .heritage-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .church::before { 
+            content: '';
+        }
+        .house::before { 
+            content: '';
+        }
+        .factory::before { 
+            content: '';
+        }
+        .monument::before { 
+            content: '';
+        }
+        .school::before { 
+            content: '';
+        }
+        .hospital::before { 
+            content: '';
+        }
+        .theater::before { 
+            content: '';
+        }
+        .museum::before { 
+            content: '';
+        }
+        .palace::before { 
+            content: '';
+        }
+        .apartment::before { 
+            content: '';
+        }
+        .barn::before { 
+            content: '';
+        }
+        .gate::before { 
+            content: '';
+        }
+        .bridge::before { 
+            content: '';
+        }
+        .ensemble::before { 
+            content: '';
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .okn-logo {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .title {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Заголовок -->
+        <div class="header">
+            <div class="okn-logo">ОКН</div>
+            <div class="title-block">
+                <div style="display: flex; align-items: flex-start;">
+                    <span class="quote-mark">«</span>
+                    <div>
+                        <div class="title">КАМЕНСК-<br>УРАЛЬСКИЙ</div>
+                        <div class="subtitle">1682 год основания</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Боковая панель -->
+            <div class="sidebar">
+                <!-- Статистика -->
+                <div class="stats-block">
+                    <div class="stats-number">131</div>
+                    <div class="stats-text">ОБЪЕКТ<br>КУЛЬТУРНОГО<br>НАСЛЕДИЯ</div>
+                </div>
+
+                <!-- Кнопки просмотра -->
+                <div class="view-buttons">
+                    <button class="btn">На карте</button>
+                    <button class="btn active">Списком</button>
+                </div>
+
+                <!-- Фильтры -->
+                <div class="filters">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active">Состояние</button>
+                        <button class="filter-btn">Материал</button>
+                    </div>
+
+                    <!-- Легенда состояния -->
+                    <div class="status-legend">
+                        <div class="status-item">
+                            <div class="status-dot good"></div>
+                            <span>Хорошее</span>
+                            <span class="status-count">11</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot normal"></div>
+                            <span>Нормальное</span>
+                            <span class="status-count">23</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot bad"></div>
+                            <span>Плохое</span>
+                            <span class="status-count">16</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot ruins"></div>
+                            <span>Руины</span>
+                            <span class="status-count">2</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot none"></div>
+                            <span>Не существует</span>
+                            <span class="status-count">5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Основная карта с иконками -->
+            <div class="map-container">
+                <div class="timeline">
+                    <div class="period">
+                        <div class="period-title">до 1800 года</div>
+                        <div class="icons-row">
+                            <div class="heritage-icon icon-none church" title="Церковь">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="15" width="18" height="10" fill="currentColor"/>
+                                    <path d="M6 15L15 5L24 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <path d="M13 3L17 3L17 8L13 8L13 3Z" fill="currentColor"/>
+                                    <path d="M15 1L16 3L14 3L15 1Z" fill="white" opacity="0.8"/>
+                                    <path d="M10 20L12 18L14 20V22H10V20Z" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad church" title="Церковь">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="15" width="18" height="10" fill="currentColor"/>
+                                    <path d="M6 15L15 5L24 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <path d="M13 3L17 3L17 8L13 8L13 3Z" fill="currentColor"/>
+                                    <path d="M15 1L16 3L14 3L15 1Z" fill="white" opacity="0.8"/>
+                                    <path d="M10 20L12 18L14 20V22H10V20Z" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="period">
+                        <div class="period-title">1800-1850</div>
+                        <div class="icons-row">
+                            <div class="heritage-icon icon-bad church" title="Церковь">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="15" width="18" height="10" fill="currentColor"/>
+                                    <path d="M6 15L15 5L24 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <path d="M13 3L17 3L17 8L13 8L13 3Z" fill="currentColor"/>
+                                    <path d="M15 1L16 3L14 3L15 1Z" fill="white" opacity="0.8"/>
+                                    <path d="M10 20L12 18L14 20V22H10V20Z" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-none house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="period">
+                        <div class="period-title">1850-1880</div>
+                        <div class="icons-row">
+                            <div class="heritage-icon icon-normal monument" title="Памятник">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="15" width="8" height="10" fill="currentColor"/>
+                                    <rect x="12" y="12" width="6" height="13" fill="currentColor"/>
+                                    <rect x="20" y="18" width="8" height="7" fill="currentColor"/>
+                                    <path d="M2 15L6 10L10 15" fill="currentColor"/>
+                                    <path d="M12 12L15 8L18 12" fill="currentColor"/>
+                                    <path d="M20 18L24 14L28 18" fill="currentColor"/>
+                                    <rect x="4" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="14" y="16" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="24" y="20" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-ruins house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad church" title="Церковь">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="15" width="18" height="10" fill="currentColor"/>
+                                    <path d="M6 15L15 5L24 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <path d="M13 3L17 3L17 8L13 8L13 3Z" fill="currentColor"/>
+                                    <path d="M15 1L16 3L14 3L15 1Z" fill="white" opacity="0.8"/>
+                                    <path d="M10 20L12 18L14 20V22H10V20Z" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad church" title="Церковь">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="15" width="18" height="10" fill="currentColor"/>
+                                    <path d="M6 15L15 5L24 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <path d="M13 3L17 3L17 8L13 8L13 3Z" fill="currentColor"/>
+                                    <path d="M15 1L16 3L14 3L15 1Z" fill="white" opacity="0.8"/>
+                                    <path d="M10 20L12 18L14 20V22H10V20Z" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-none house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-none house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="period">
+                        <div class="period-title">1880-1900</div>
+                        <div class="icons-row">
+                            <div class="heritage-icon icon-ruins house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad church" title="Церковь">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="15" width="18" height="10" fill="currentColor"/>
+                                    <path d="M6 15L15 5L24 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <path d="M13 3L17 3L17 8L13 8L13 3Z" fill="currentColor"/>
+                                    <path d="M15 1L16 3L14 3L15 1Z" fill="white" opacity="0.8"/>
+                                    <path d="M10 20L12 18L14 20V22H10V20Z" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad barn" title="Завод">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V12L15 8L25 12V25H5Z" fill="currentColor"/>
+                                    <rect x="10" y="18" width="10" height="7" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="14" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="14" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-none house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="period">
+                        <div class="period-title">1900-1940</div>
+                        <div class="icons-row">
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad apartment" title="Школа">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="5" width="18" height="20" fill="currentColor"/>
+                                    <rect x="8" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="13" y="21" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal apartment" title="Школа">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="5" width="18" height="20" fill="currentColor"/>
+                                    <rect x="8" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="13" y="21" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal apartment" title="Школа">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="5" width="18" height="20" fill="currentColor"/>
+                                    <rect x="8" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="13" y="21" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal apartment" title="Школа">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="5" width="18" height="20" fill="currentColor"/>
+                                    <rect x="8" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="7" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="11" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="15" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="8" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="12" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="20" y="19" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="13" y="21" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good palace" title="Больница">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="15" width="6" height="10" fill="currentColor"/>
+                                    <rect x="10" y="12" width="10" height="13" fill="currentColor"/>
+                                    <rect x="22" y="15" width="6" height="10" fill="currentColor"/>
+                                    <path d="M2 15L8 10L10 12" fill="currentColor"/>
+                                    <path d="M10 12L15 5L20 12" fill="currentColor"/>
+                                    <path d="M20 12L22 10L28 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="15" y="2" width="1" height="6" fill="white" opacity="0.8"/>
+                                    <rect x="4" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="13" y="16" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <rect x="17" y="16" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <rect x="24" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good gate" title="Музей">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="24" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="6" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="16" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="2" y="8" width="26" height="3" fill="currentColor"/>
+                                    <circle cx="5" cy="5" r="2" fill="currentColor"/>
+                                    <circle cx="25" cy="5" r="2" fill="currentColor"/>
+                                    <rect x="8" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                    <rect x="18" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good gate" title="Музей">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="24" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="6" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="16" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="2" y="8" width="26" height="3" fill="currentColor"/>
+                                    <circle cx="5" cy="5" r="2" fill="currentColor"/>
+                                    <circle cx="25" cy="5" r="2" fill="currentColor"/>
+                                    <rect x="8" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                    <rect x="18" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal monument" title="Памятник">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="15" width="8" height="10" fill="currentColor"/>
+                                    <rect x="12" y="12" width="6" height="13" fill="currentColor"/>
+                                    <rect x="20" y="18" width="8" height="7" fill="currentColor"/>
+                                    <path d="M2 15L6 10L10 15" fill="currentColor"/>
+                                    <path d="M12 12L15 8L18 12" fill="currentColor"/>
+                                    <path d="M20 18L24 14L28 18" fill="currentColor"/>
+                                    <rect x="4" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="14" y="16" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="24" y="20" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good monument" title="Памятник">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="15" width="8" height="10" fill="currentColor"/>
+                                    <rect x="12" y="12" width="6" height="13" fill="currentColor"/>
+                                    <rect x="20" y="18" width="8" height="7" fill="currentColor"/>
+                                    <path d="M2 15L6 10L10 15" fill="currentColor"/>
+                                    <path d="M12 12L15 8L18 12" fill="currentColor"/>
+                                    <path d="M20 18L24 14L28 18" fill="currentColor"/>
+                                    <rect x="4" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="14" y="16" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="24" y="20" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-bad house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="period">
+                        <div class="period-title">после 1940</div>
+                        <div class="icons-row">
+                            <div class="heritage-icon icon-good palace" title="Больница">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="15" width="6" height="10" fill="currentColor"/>
+                                    <rect x="10" y="12" width="10" height="13" fill="currentColor"/>
+                                    <rect x="22" y="15" width="6" height="10" fill="currentColor"/>
+                                    <path d="M2 15L8 10L10 12" fill="currentColor"/>
+                                    <path d="M10 12L15 5L20 12" fill="currentColor"/>
+                                    <path d="M20 12L22 10L28 15" fill="currentColor"/>
+                                    <rect x="13" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="15" y="2" width="1" height="6" fill="white" opacity="0.8"/>
+                                    <rect x="4" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                    <rect x="13" y="16" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <rect x="17" y="16" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <rect x="24" y="18" width="2" height="2" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal gate" title="Музей">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="24" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="6" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="16" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="2" y="8" width="26" height="3" fill="currentColor"/>
+                                    <circle cx="5" cy="5" r="2" fill="currentColor"/>
+                                    <circle cx="25" cy="5" r="2" fill="currentColor"/>
+                                    <rect x="8" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                    <rect x="18" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal gate" title="Музей">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="24" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="6" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="16" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="2" y="8" width="26" height="3" fill="currentColor"/>
+                                    <circle cx="5" cy="5" r="2" fill="currentColor"/>
+                                    <circle cx="25" cy="5" r="2" fill="currentColor"/>
+                                    <rect x="8" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                    <rect x="18" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-good gate" title="Музей">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="24" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="6" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="16" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="2" y="8" width="26" height="3" fill="currentColor"/>
+                                    <circle cx="5" cy="5" r="2" fill="currentColor"/>
+                                    <circle cx="25" cy="5" r="2" fill="currentColor"/>
+                                    <rect x="8" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                    <rect x="18" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal gate" title="Музей">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="24" y="8" width="4" height="17" fill="currentColor"/>
+                                    <rect x="6" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="16" y="12" width="8" height="13" fill="currentColor"/>
+                                    <rect x="2" y="8" width="26" height="3" fill="currentColor"/>
+                                    <circle cx="5" cy="5" r="2" fill="currentColor"/>
+                                    <circle cx="25" cy="5" r="2" fill="currentColor"/>
+                                    <rect x="8" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                    <rect x="18" y="16" width="4" height="4" fill="white" opacity="0.3"/>
+                                </svg>
+                            </div>
+                            <div class="heritage-icon icon-normal house" title="Дом">
+                                <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 25V15L15 5L25 15V25H20V18H10V25H5Z" fill="currentColor"/>
+                                    <rect x="12" y="20" width="2" height="5" fill="white" opacity="0.3"/>
+                                    <rect x="16" y="20" width="2" height="3" fill="white" opacity="0.3"/>
+                                    <path d="M8 10L10 8L12 10V12H8V10Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Интерактивность для кнопок фильтров
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Интерактивность для кнопок просмотра
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Добавляем hover эффекты для иконок
+        document.querySelectorAll('.heritage-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                const tooltip = this.getAttribute('title');
+                // Можно добавить кастомный tooltip
+            });
+        });
+    </script>
+</body>
+</html>

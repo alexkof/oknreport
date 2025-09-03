@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг ОКН - Каменск-Уральский</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Заголовок -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo">ОКН</div>
+                <div class="city-info">
+                    <h1>КАМЕНСК-УРАЛЬСКИЙ</h1>
+                    <p class="founded">1682 год основания</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="main">
+        <div class="container">
+            <!-- Статистика -->
+            <section class="stats-section">
+                <div class="total-stats">
+                    <div class="total-number" id="totalObjects">0</div>
+                    <div class="total-label">
+                        ОБЪЕКТ<br>
+                        КУЛЬТУРНОГО<br>
+                        НАСЛЕДИЯ
+                    </div>
+                </div>
+                <div class="status-stats">
+                    <div class="status-item good">
+                        <div class="status-dot"></div>
+                        <span class="status-label">Хорошее</span>
+                        <span class="status-count" id="goodCount">0</span>
+                    </div>
+                    <div class="status-item normal">
+                        <div class="status-dot"></div>
+                        <span class="status-label">Нормальное</span>
+                        <span class="status-count" id="normalCount">0</span>
+                    </div>
+                    <div class="status-item bad">
+                        <div class="status-dot"></div>
+                        <span class="status-label">Плохое</span>
+                        <span class="status-count" id="badCount">0</span>
+                    </div>
+                    <div class="status-item ruins">
+                        <div class="status-dot"></div>
+                        <span class="status-label">Руины</span>
+                        <span class="status-count" id="ruinsCount">0</span>
+                    </div>
+                    <div class="status-item not-exists">
+                        <div class="status-dot"></div>
+                        <span class="status-label">Не существует</span>
+                        <span class="status-count" id="notExistsCount">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Фильтры и управление -->
+            <section class="controls-section">
+                <div class="filters">
+                    <button class="filter-tab active" data-filter="condition">Состояние</button>
+                    <button class="filter-tab" data-filter="material">Материал</button>
+                </div>
+                <div class="view-controls">
+                    <button class="view-btn" data-view="map">На карте</button>
+                    <button class="view-btn active" data-view="list">Списком</button>
+                </div>
+            </section>
+
+            <!-- Индикатор загрузки -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Загрузка данных...</p>
+            </div>
+
+            <!-- Сообщение об ошибке -->
+            <div id="error" class="error" style="display: none;">
+                <div class="error-content">
+                    <h3>Ошибка загрузки данных</h3>
+                    <p id="errorMessage">Не удалось загрузить данные. Проверьте подключение к интернету.</p>
+                    <button onclick="loadData()" class="retry-btn">Повторить</button>
+                </div>
+            </div>
+
+            <!-- Сетка объектов -->
+            <section class="objects-section">
+                <div class="timeline">
+                    <div class="period-group" data-period="before-1800">
+                        <h3 class="period-title">до 1800 года</h3>
+                        <div class="objects-grid" id="period-before-1800"></div>
+                    </div>
+                    
+                    <div class="period-group" data-period="1800-1850">
+                        <h3 class="period-title">1800—1850</h3>
+                        <div class="objects-grid" id="period-1800-1850"></div>
+                    </div>
+                    
+                    <div class="period-group" data-period="1850-1880">
+                        <h3 class="period-title">1850—1880</h3>
+                        <div class="objects-grid" id="period-1850-1880"></div>
+                    </div>
+                    
+                    <div class="period-group" data-period="1880-1900">
+                        <h3 class="period-title">1880—1900</h3>
+                        <div class="objects-grid" id="period-1880-1900"></div>
+                    </div>
+                    
+                    <div class="period-group" data-period="1900-1940">
+                        <h3 class="period-title">1900—1940</h3>
+                        <div class="objects-grid" id="period-1900-1940"></div>
+                    </div>
+                    
+                    <div class="period-group" data-period="after-1940">
+                        <h3 class="period-title">после 1940</h3>
+                        <div class="objects-grid" id="period-after-1940"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Модальное окно с деталями объекта -->
+    <div id="objectModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <img id="modalIcon" src="" alt="" />
+                </div>
+                <div class="modal-title">
+                    <h2 id="modalTitle">Название объекта</h2>
+                    <p id="modalPeriod">период</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-info">
+                    <p><strong>Адрес:</strong> <span id="modalAddress">г. Каменск-Уральский, ул. Ленина, д. 95</span></p>
+                    <p><strong>Статус:</strong> <span id="modalStatus">Готово</span></p>
+                    <p><strong>Год постройки:</strong> <span id="modalYear">XIX век</span></p>
+                </div>
+                <div class="modal-photo">
+                    <img id="modalPhoto" src="" alt="Фотография объекта" />
+                    <p class="photo-caption">№ <span id="modalNumber">661710747660005</span> в реестре ОКН</p>
+                </div>
+                <div class="modal-actions">
+                    <a id="modalTelegramLink" href="#" target="_blank" class="btn-telegram">
+                        📱 Мониторинг в телеграм
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="test-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
