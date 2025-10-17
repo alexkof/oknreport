@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ОКН Свердловской области</title>
+    <style>
+        :root {
+            --red-brand: #dc3545;
+            --blue-accent: #007bff;
+            --background: #f8f9fa;
+            --white: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+
+            /* Состояния объектов */
+            --status-good: #28a745;
+            --status-normal: #ffc107;
+            --status-bad: #dc3545;
+            --status-ruins: #a52a2a;
+            --status-not-exists: transparent;
+            --status-not-available: #e9ecef;
+
+            /* Цвета иконок */
+            --icon-good: #28a745;
+            --icon-normal: #ffc107;
+            --icon-bad: #dc3545;
+            --icon-ruins: #a52a2a;
+            --icon-not-exists: #999999;
+            --icon-not-available: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .okn-logo {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .region-info {
+            flex: 1;
+        }
+
+        .region-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Stats */
+        .total-stats {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .total-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .total-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Legend */
+        .legend-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .legend-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        .legend-color.good { background: var(--status-good); border-color: var(--status-good); }
+        .legend-color.normal { background: var(--status-normal); border-color: var(--status-normal); }
+        .legend-color.bad { background: var(--status-bad); border-color: var(--status-bad); }
+        .legend-color.ruins { background: var(--status-ruins); border-color: var(--status-ruins); }
+        .legend-color.not-exists { background: white; border-style: dashed; }
+        .legend-color.not-available { background: var(--status-not-available); border-color: var(--status-bad); }
+
+        .legend-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* Cities */
+        .cities-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .city-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .city-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--background);
+        }
+
+        .city-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .city-count {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .period {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .period-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .objects-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .heritage-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .heritage-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Цвета иконок по состоянию */
+        .heritage-icon.good { background: #4caf50; }
+        .heritage-icon.normal { background: #ff9800; }
+        .heritage-icon.bad { background: #f44336; }
+        .heritage-icon.ruins { background: #795548; }
+        .heritage-icon.not-exists { background: #9e9e9e; opacity: 0.5; }
+        .heritage-icon.not-available { background: #9e9e9e; }
+
+        /* SVG иконки */
+        .heritage-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--blue-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error */
+        .error {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .error-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .retry-btn {
+            background: var(--blue-accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .okn-logo {
+                font-size: 3rem;
+            }
+
+            .region-name {
+                font-size: 2rem;
+            }
+
+            .total-number {
+                font-size: 2.5rem;
+            }
+
+            .city-name {
+                font-size: 1.5rem;
+            }
+
+            .objects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-section">
+                <div class="okn-logo">ОКН</div>
+                <div class="region-info">
+                    <div class="region-name">СВЕРДЛОВСКАЯ ОБЛАСТЬ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Stats -->
+        <div class="total-stats">
+            <div class="total-number" id="totalCount">-</div>
+            <div class="total-label">объектов культурного наследия</div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend-section">
+            <div class="legend-title">Состояние объектов</div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color good"></div>
+                    <span class="legend-text">Хорошее</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color normal"></div>
+                    <span class="legend-text">Нормальное</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color bad"></div>
+                    <span class="legend-text">Плохое</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color ruins"></div>
+                    <span class="legend-text">Руины</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color not-exists"></div>
+                    <span class="legend-text">Не существует</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color not-available"></div>
+                    <span class="legend-text">Не доступен</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Загрузка данных...</p>
+        </div>
+
+        <!-- Error State -->
+        <div class="error" id="error" style="display: none;">
+            <div class="error-icon">⚠️</div>
+            <h2>Ошибка загрузки данных</h2>
+            <p id="errorMessage">Не удалось загрузить данные из Google Таблиц</p>
+            <button class="retry-btn" onclick="loadData()">Повторить</button>
+        </div>
+
+        <!-- Cities Container -->
+        <div class="cities-container" id="citiesContainer"></div>
+    </div>
+
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR1T7ugA8z7TV4CGgorenfTg3joi3SiDPe0QE_Fjs7_DUHB2qYEAt-5qepZFZe42-udQLV4q9XmXnrw/pub?gid=1292008891&single=true&output=csv';
+
+        // Периоды времени
+        const TIME_PERIODS = [
+            { id: 'before-1800', label: 'до 1800 года', min: 0, max: 1799 },
+            { id: '1800-1850', label: '1800-1850', min: 1800, max: 1850 },
+            { id: '1850-1880', label: '1850-1880', min: 1850, max: 1880 },
+            { id: '1880-1900', label: '1880-1900', min: 1880, max: 1900 },
+            { id: '1900-1940', label: '1900-1940', min: 1900, max: 1940 },
+            { id: 'after-1940', label: 'после 1940', min: 1940, max: 9999 }
+        ];
+
+        // SVG иконки
+        const SVG_ICONS = {
+            'house': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.68" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><rect x="5.68" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><rect x="9.15" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><rect x="9.15" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><rect x="12.9" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><rect x="12.9" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><rect x="16.41" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><rect x="16.41" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/><path d="M22.31,12.21l-1.91-2.45c-.12-.16-.31-.25-.51-.25h-5.37l-2.12-1.69c-.23-.18-.56-.19-.79,0l-2.24,1.7h-5.26c-.2,0-.39.09-.51.25l-1.91,2.45c-.15.19-.18.46-.07.68s.33.36.58.36h.65v9.31c0,.36.29.64.64.64h17.02c.36,0,.64-.29.64-.64v-9.31h.65c.25,0,.47-.14.58-.36s.08-.48-.07-.68ZM19.58,10.8l.91,1.16h-2.88l-1.46-1.16h3.44ZM11.99,9.14l3.06,2.44.49.39h-7.27l1.71-1.3s0,0,0,0l2.01-1.53ZM4.42,10.8h3.25l-1.54,1.16h-2.62l.91-1.16ZM19.87,21.91H4.13v-8.66h15.73v8.66Z" fill="currentColor"/></svg>',
+            'hut': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.89,20.71h-1.08c.03-.14.05-.29.05-.44,0-.45-.16-.87-.42-1.21.26-.33.42-.75.42-1.21s-.16-.87-.42-1.21c.26-.33.42-.75.42-1.21s-.16-.87-.42-1.21c.26-.33.42-.75.42-1.21,0-.15-.02-.3-.05-.44h.31c.33,0,.63-.21.73-.53.1-.32,0-.66-.28-.86l-3.29-2.41c.02-.06.03-.12.03-.19v-2.85c0-.42-.34-.77-.77-.77s-.77.34-.77.77v1.94l-4.22-3.09c-.27-.2-.64-.2-.91,0L2.63,11.21c-.27.2-.38.54-.28.86.1.32.4.53.73.53h.39c-.03.14-.05.29-.05.44,0,.45.16.87.42,1.21-.26.33-.42.75-.42,1.21s.16.87.42,1.21c-.26.33-.42.75-.42,1.21s.16.87.42,1.21c-.26.33-.42.75-.42,1.21,0,.15.02.3.05.44h-1.37c-.42,0-.77.34-.77.77s.34.77.77.77h19.78c.42,0,.77-.34.77-.77s-.34-.77-.77-.77ZM12.1,6.18l6.67,4.88H5.43l6.67-4.88ZM4.96,20.27c0-.24.2-.44.44-.44.42,0,.77-.34.77-.77s-.34-.77-.77-.77c-.24,0-.44-.2-.44-.44s.2-.44.44-.44c.42,0,.77-.34.77-.77s-.34-.77-.77-.77c-.24,0-.44-.2-.44-.44s.2-.44.44-.44c.42,0,.77-.34.77-.77s-.34-.77-.77-.77c-.24,0-.44-.2-.44-.44s.2-.44.44-.44h13.49c.24,0,.44.2.44.44s-.2.44-.44.44c-.42,0-.77.34-.77.77s.34.77.77.77c.24,0,.44.2.44.44s-.2.44-.44.44c-.42,0-.77.34-.77.77s.34.77.77.77c.24,0,.44.2.44.44s-.2.44-.44.44c-.42,0-.77.34-.77.77s.34.77.77.77c.24,0,.44.2.44.44s-.2.44-.44.44h-3.9v-3.73c0-1.39-1.13-2.52-2.52-2.52h-.83c-1.39,0-2.52,1.13-2.52,2.52v3.73h-3.73c-.24,0-.44-.2-.44-.44ZM10.66,20.71v-3.73c0-.54.44-.98.98-.98h.83c.54,0,.98.44.98.98v3.73h-2.8Z" fill="currentColor"/></svg>',
+            'church': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.74,16.88l-3.39-1.8v-3.31c0-.21-.09-.4-.24-.54l-5.38-4.85v-2.54h.98c.4,0,.72-.32.72-.72s-.32-.72-.72-.72h-.98v-1.24c0-.4-.32-.72-.72-.72s-.72.32-.72.72v1.24h-.98c-.4,0-.72.32-.72.72s.32.72.72.72h.98v2.53l-5.39,4.86c-.15.14-.24.33-.24.54v3.31l-3.39,1.8c-.24.13-.38.37-.38.64v5.33c0,.4.32.72.72.72h18.79c.4,0,.72-.32.72-.72v-5.33c0-.27-.15-.51-.38-.64ZM10.92,22.12c-.12,0-.22-.1-.22-.22v-3.51c0-.72.58-1.3,1.3-1.3s1.3.58,1.3,1.3v3.51c0,.12-.1.22-.22.22h-2.17ZM20.67,22.12h-5.94c0-.07.02-.14.02-.22v-3.51c0-1.52-1.23-2.75-2.75-2.75s-2.75,1.23-2.75,2.75v3.51c0,.07,0,.15.02.22H3.33v-4.17l3.39-1.8c.24-.13.38-.37.38-.64v-3.43l4.9-4.42,4.9,4.42v3.43c0,.27.15.51.38.64l3.39,1.8v4.17Z" fill="currentColor"/></svg>',
+            'palace': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.2,19.08h-2.14v-5.82h.72c.24,0,.44-.2.44-.44v-2.22c0-.24-.2-.44-.44-.44h-.72v-2.45c0-.17-.1-.33-.26-.4l-7.62-3.48c-.12-.05-.25-.05-.36,0l-7.62,3.48c-.16.07-.26.23-.26.4v2.45h-.77c-.24,0-.44.2-.44.44v2.22c0,.24.2.44.44.44h.77v5.82H1.8c-.24,0-.44.2-.44.44v2.08c0,.24.2.44.44.44h20.41c.24,0,.44-.2.44-.44v-2.08c0-.24-.2-.44-.44-.44ZM16.87,20.07v-6.79h.66s0,6.79,0,6.79h-.66ZM4.81,20.07v-6.8h.71v6.8h-.71ZM11.91,9.31c1.32,0,2.4,1.08,2.4,2.4v7.37h-.54v-2.34c0-1-.81-1.81-1.81-1.81s-1.81.81-1.81,1.81v2.34h-.65v-6.26s0,0,0,0v-1.11c0-1.32,1.08-2.4,2.4-2.4ZM11.03,19.08v-2.34c0-.52.42-.94.94-.94s.94.42.94.94v2.34h-1.87ZM6.4,13.27h.66v6.8h-.66v-6.8ZM7.93,13.26h.71v5.82h-.71v-5.82ZM15.19,13.29h.81s0,5.78,0,5.78h-.81v-5.78ZM18.4,13.28h.79s0,6.24,0,6.24v.56h-.79v-6.79ZM20.34,12.38h-5.15v-1.35h5.15v1.35ZM4.81,7.99l7.19-3.28,7.19,3.28v2.17h-4.39c-.55-1.03-1.64-1.73-2.89-1.73s-2.33.7-2.88,1.73h-4.22v-2.17ZM3.61,11.04h5.03v1.35H3.61v-1.35ZM21.77,21.16H2.23v-1.21h1.71v.56c0,.24.2.44.44.44h3.11c.24,0,.44-.2.44-.44v-.56h1.14s0,0,0,0h5.68s0,0,0,0h1.24v.56c0,.24.2.44.44.44h3.19c.24,0,.44-.2.44-.44v-.56h1.71v1.21Z" fill="currentColor"/><path d="M11.91,13.89c1.03,0,1.86-.84,1.86-1.86s-.84-1.86-1.86-1.86-1.86.84-1.86,1.86.84,1.86,1.86,1.86ZM11.91,11.04c.55,0,.99.44.99.99s-.44.99-.99.99-.99-.44-.99-.99.44-.99.99-.99Z" fill="currentColor"/></svg>',
+            'bridge': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.38,17.69c-2.24,0-4.1,1.53-4.43,3.51h-1.44c-.33-1.99-2.19-3.51-4.43-3.51s-4.19,1.6-4.45,3.65h-1.41c-.27-2.05-2.16-3.65-4.45-3.65-.35,0-.64.28-.64.64s.28.64.64.64c1.58,0,2.9,1.03,3.16,2.38h-1.47c-.35,0-.64.28-.64.64s.28.64.64.64h6.8c.35,0,.64-.28.64-.64s-.28-.64-.64-.64h-1.35c.26-1.35,1.58-2.38,3.16-2.38,1.77,0,3.22,1.29,3.22,2.88,0,.35.28.64.64.64.03,0,.05,0,.08,0,.03,0,.05,0,.08,0h4.63c.35,0,.64-.28.64-.64s-.28-.64-.64-.64Z" fill="currentColor"/><path d="M1.62,12.96h3.34s0,.03,0,.05v1.34H1.75c-.35,0-.64.28-.64.64s.28.64.64.64h20.63c.35,0,.64-.28.64-.64s-.28-.64-.64-.64h-4v-1.34s0-.03,0-.05h3.89c.35,0,.64-.28.64-.64s-.28-.64-.64-.64H1.62c-.35,0-.64.28-.64.64s.28.64.64.64ZM17.1,13v1.34H6.24v-1.34s0-.03,0-.05h10.87s0,.03,0,.05Z" fill="currentColor"/></svg>',
+            'tower': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.05,5.19l-1.26-3.24c-.1-.27-.36-.44-.65-.44H7.85c-.29,0-.54.18-.65.44l-1.26,3.24c-.08.21-.06.46.07.65s.34.3.57.3h.18v6.07c0,.34.25.62.57.68v9.05c0,.38.31.7.7.7h8.92c.38,0,.7-.31.7-.7v-9.05c.32-.06.57-.34.57-.68v-6.07h.18c.23,0,.44-.11.57-.3.13-.19.16-.43.07-.65ZM8.32,2.9h8.34l.72,1.85H7.6l.72-1.85ZM11.65,20.99v-2.96c0-.14.11-.25.25-.25h1.18c.14,0,.25.11.25.25v2.96h-1.69ZM16.26,21.25h-1.53v-3.22c0-.91-.74-1.64-1.64-1.64h-1.18c-.91,0-1.64.74-1.64,1.64v3.22h-1.53v-8.34h7.53v8.34ZM16.83,11.52h-8.67v-5.38h8.67v5.38Z" fill="currentColor"/><rect x="10.94" y="7.08" width="3.1" height="3.5" rx=".44" ry=".44" fill="currentColor"/></svg>',
+            'monument': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.7,19.29h-.91v-3.61c0-.39-.31-.7-.7-.7h-1.36V4.21c0-.23-.12-.45-.31-.58l-3.06-2.07c-.21-.14-.49-.16-.72-.04-.23.12-.37.36-.37.62v12.84h-1.36c-.39,0-.7.31-.7.7v3.61h-.91c-.39,0-.7.31-.7.7v2.23c0,.39.31.7.7.7h10.4c.39,0,.7-.31.7-.7v-2.23c0-.39-.31-.7-.7-.7ZM11.66,3.45l1.66,1.12v10.11h-1.66V3.45ZM9.61,16.37h5.78v2.63h-5.78v-2.63ZM17,21.52H7.99v-.83h9.01v.83Z" fill="currentColor"/></svg>',
+            'ensemble': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.93,17.15l-4.69-5.08c-.12-.13-.28-.2-.46-.2s-.34.07-.46.2l-4.69,5.08c-.17.18-.21.44-.11.67.09.2.27.34.48.37v3.29c0,.34.28.62.62.62h8c.34,0,.62-.28.62-.62v-3.28h.23c.25,0,.47-.15.57-.37.1-.23.05-.49-.11-.67ZM17.78,13.41l3.01,3.26h-6.03l3.01-3.26ZM21,20.85h-6.76v-2.66h6.76v2.66Z" fill="currentColor"/><path d="M19.14,20.19h.66c.22,0,.4-.16.4-.36v-.91c0-.2-.18-.36-.4-.36h-.66c-.22,0-.4.16-.4.36v.91c0,.2.18.36.4.36Z" fill="currentColor"/><path d="M15.55,20.19h.66c.22,0,.4-.16.4-.36v-.91c0-.2-.18-.36-.4-.36h-.66c-.22,0-.4.16-.4.36v.91c0,.2.18.36.4.36Z" fill="currentColor"/><path d="M12.9,13.16c.11-.2.1-.44-.02-.63l-.76-1.18c-.11-.18-.31-.29-.52-.29h-5.07v-1.91c0-.34-.28-.62-.62-.62h-2.28c-.34,0-.62.28-.62.62v1.91h-.37c-.21,0-.41.11-.52.29l-.76,1.18c-.12.19-.13.43-.02.63.11.2.32.32.54.32h.16v7.99c0,.34.28.62.62.62h8.93c.34,0,.62-.28.62-.62v-7.99h.16c.23,0,.44-.12.54-.32ZM4.24,9.77h1.04v1.29h-1.04v-1.29ZM9.76,20.85v-1.59c0-.44-.36-.8-.8-.8s-.8.36-.8.8v1.59H3.27v-3.06h7.69v3.06h-1.19ZM10.95,16.55H3.27v-3.06h7.69v3.06Z" fill="currentColor"/></svg>',
+            'gate': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.91,7.23l-1.61-2.91c-.11-.21-.33-.33-.57-.33H4.26c-.24,0-.45.13-.57.33l-1.61,2.91c-.11.2-.11.44,0,.64.12.2.33.32.56.32h.70v5.41s0,.01,0,.02v4.92h-.31c-.36,0-.65.29-.65.65v2.54c0,.36.29.65.65.65h5.58c.36,0,.65-.29.65-.65v-2.54c0-.36-.29-.65-.65-.65h-.31v-4.76s0-.16,0-.16c0-.98,1.03-1.77,2.29-1.77h2.79c1.26,0,2.28.79,2.28,1.77,0,.01,0,.1,0,.14v4.78h-.31c-.36,0-.65.29-.65.65v2.54c0,.36.29.65.65.65h5.58c.36,0,.65-.29.65-.65v-2.54c0-.36-.29-.65-.65-.65h-.31v-4.78s0-.02,0-.03c0-.04.01-.07.01-.11v-5.43h.7c.23,0,.44-.12.56-.32.12-.2.12-.44,0-.64ZM7.97,21.08H3.69v-1.25h4.28v1.25ZM4.65,18.54v-4.13h2.37v4.13h-2.37ZM13.4,10.56h-2.79c-1.72,0-3.15,1.04-3.5,2.41h-2.46v-4.74h14.7v4.74h-2.45c-.35-1.38-1.79-2.42-3.5-2.42ZM20.3,21.08h-4.28v-1.25h4.28v1.25ZM16.97,18.54v-4.13h2.37v4.13h-2.37ZM4.64,5.28h14.71l.89,1.62H3.75l.89-1.62Z" fill="currentColor"/></svg>',
+            'barn': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.27,16.51l-3.87-2.18-2.84-5.21c-.07-.12-.18-.22-.31-.28l-5.05-2.19c-.16-.07-.35-.07-.51,0l-5.05,2.19c-.13.06-.24.15-.31.28l-2.97,5.43c-.05.09-.08.2-.08.31v6.85c0,.35.29.64.64.64h4.18s0,0,0,0h7.67s0,0,0,0h4.18s.03,0,.04,0c.01,0,.03,0,.04,0h4.04c.35,0,.64-.29.64-.64v-4.59c0-.29-.19-.53-.45-.61ZM18.6,15.9l2.84,1.6v3.56h-2.84v-5.16ZM7.85,21.07l2.09-1.77,2.09,1.77h-4.18ZM13.14,20.33l-2.21-1.87,2.21-1.87v3.73ZM9.94,17.63l-2.09-1.77h4.18l-2.09,1.77ZM8.95,18.47l-2.21,1.87v-3.73l2.21,1.87ZM17.33,21.07h-2.91v-5.84c0-.34-.29-.64-.64-.64h-7.67c-.34,0-.64.29-.64.64v5.84h-2.91v-6.05l2.78-5.1,4.6-1.99,4.6,1.99,2.78,5.10v6.05Z" fill="currentColor"/></svg>',
+            'factory': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.89,10.3h-2.42l-.3-5.05c-.02-.36-.32-.64-.68-.64h-1.99c-.36,0-.65.28-.68.64l-.3,5.05h-5.7l-.45-7.18c-.02-.36-.32-.63-.68-.63h-1.99c-.36,0-.65.28-.68.63l-.45,7.18h-1.48c-.37,0-.68.3-.68.68v10.93c0,.37.3.68.68.68h17.78c.37,0,.68-.3.68-.68v-10.93c0-.37-.3-.68-.68-.68ZM16.15,5.96h.71l.25,4.34h-1.22l.25-4.34ZM6.35,3.84h.72l.41,6.46h-1.53l.41-6.46ZM5.22,11.65h14.99v1.91H3.79v-1.91h1.44ZM12.76,20.97v-2.78h4.83v2.78h-4.83ZM18.94,21.23v-3.71c0-.37-.3-.68-.68-.68h-6.18c-.37,0-.68.3-.68.68v3.71H3.79v-6.31h16.43v6.31h-1.27Z" fill="currentColor"/></svg>',
+            'highrise': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.81,4.27c0-.35-.29-.63-.64-.63h-8.18c-.35,0-.64.29-.64.64v2.98L3.84,3.7c-.2-.09-.43-.08-.61.04-.18.12-.3.32-.3.54v18.09c0,.35.29.64.64.64h16.87c.17,0,.33-.07.45-.19.12-.12.19-.29.18-.46l-.26-18.09ZM4.2,21.74v-2.39h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-1.76h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-1.76h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-1.76h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-3.66l6.91,3.26.24,13.18h-7.15ZM12.64,21.74V4.92h6.91l.24,16.82h-7.15Z" fill="currentColor"/><path d="M18.14,6.43h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/><path d="M18.14,9.44h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/><path d="M18.14,12.45h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/><path d="M18.14,15.46h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/><path d="M18.14,18.47h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/></svg>'
+        };
+
+        // Маппинг названий иконок из CSV в ключи SVG_ICONS
+        // КАЖДОМУ ТИПУ СООТВЕТСТВУЕТ РОВНО ОДНА ИКОНКА
+        function getIconSVG(iconName) {
+            if (!iconName) return SVG_ICONS['house'];
+
+            const name = iconName.trim().toLowerCase();
+
+            const iconMap = {
+                'домик': 'house',           // Домик → house
+                'изба': 'hut',              // Изба → hut
+                'церковь': 'church',        // Церковь → church
+                'дворец': 'palace',         // Дворец → palace
+                'мост': 'bridge',           // Мост → bridge
+                'башня': 'tower',           // Башня → tower
+                'монумент': 'monument',     // Монумент → monument
+                'ансамбль': 'ensemble',     // Ансамбль → ensemble
+                'ворота': 'gate',           // Ворота → gate
+                'амбар': 'barn',            // Амбар → barn
+                'завод': 'factory',         // Завод → factory
+                'многоэтажка': 'highrise'   // Многоэтажка → highrise
+            };
+
+            const iconKey = iconMap[name] || 'house';
+            return SVG_ICONS[iconKey] || SVG_ICONS['house'];
+        }
+
+        // Парсинг CSV с учетом кавычек
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            if (lines.length < 2) return [];
+
+            const headers = parseCSVLine(lines[0]);
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+
+                const values = parseCSVLine(lines[i]);
+                const row = {};
+
+                headers.forEach((header, index) => {
+                    row[header] = values[index] || '';
+                });
+
+                data.push(row);
+            }
+
+            console.log('Parsed headers:', headers);
+            console.log('Parsed data rows:', data.length);
+            return data;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+
+            result.push(current.trim());
+            return result;
+        }
+
+        function extractYearFromPeriod(period) {
+            if (!period) return 0;
+            const match = period.match(/\d{4}/);
+            return match ? parseInt(match[0]) : 0;
+        }
+
+        function getCondition(status) {
+            if (!status) return 'not-exists';
+            const s = status.toLowerCase().trim();
+
+            if (s.includes('хорошее') || s.includes('готово')) return 'good';
+            if (s.includes('удовлетворительное') || s.includes('нормальное') || s.includes('проверяем')) return 'normal';
+            if (s.includes('плохое')) return 'bad';
+            if (s.includes('руины')) return 'ruins';
+            if (s.includes('не существует')) return 'not-exists';
+            if (s.includes('не доступен')) return 'not-available';
+
+            return 'not-exists';
+        }
+
+        function determinePeriod(year) {
+            const y = parseInt(year) || 0;
+
+            for (const period of TIME_PERIODS) {
+                if (y >= period.min && y <= period.max) {
+                    return period.id;
+                }
+            }
+
+            return 'after-1940';
+        }
+
+        function groupByCity(objects) {
+            const cities = {};
+
+            objects.forEach(obj => {
+                let cityName = obj['Город'] || 'Неизвестный город';
+                cityName = cityName.trim().replace(/^"|"$/g, '');
+
+                if (!cities[cityName]) {
+                    cities[cityName] = {
+                        name: cityName,
+                        objects: [],
+                        count: 0
+                    };
+                }
+
+                cities[cityName].objects.push(obj);
+                cities[cityName].count++;
+            });
+
+            return Object.values(cities).sort((a, b) => b.count - a.count);
+        }
+
+        function groupByPeriod(objects) {
+            const periods = {};
+
+            TIME_PERIODS.forEach(period => {
+                periods[period.id] = {
+                    label: period.label,
+                    objects: []
+                };
+            });
+
+            objects.forEach(obj => {
+                const periodText = obj['Период'] || '';
+                const year = extractYearFromPeriod(periodText);
+                const period = determinePeriod(year);
+
+                if (periods[period]) {
+                    periods[period].objects.push(obj);
+                }
+            });
+
+            return periods;
+        }
+
+        function renderObject(obj) {
+            const name = obj['Название'] || 'Без названия';
+            const status = obj['Состояние'] || '';
+            const condition = getCondition(status);
+            const iconName = obj['Иконка'] || '';
+            const iconSVG = getIconSVG(iconName);
+
+            return `
+                <div class="heritage-icon ${condition}" title="${name}">
+                    ${iconSVG}
+                </div>
+            `;
+        }
+
+        function renderPeriod(period, objects) {
+            if (objects.length === 0) return '';
+
+            const objectsHtml = objects.map(obj => renderObject(obj)).join('');
+
+            return `
+                <div class="period">
+                    <div class="period-label">${period.label} (${objects.length})</div>
+                    <div class="objects-grid">
+                        ${objectsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCity(city) {
+            const periods = groupByPeriod(city.objects);
+
+            let periodsHtml = '';
+            TIME_PERIODS.forEach(period => {
+                periodsHtml += renderPeriod(period, periods[period.id].objects);
+            });
+
+            return `
+                <div class="city-section">
+                    <div class="city-header">
+                        <div class="city-name">${city.name}</div>
+                        <div class="city-count">${city.count} объектов</div>
+                    </div>
+                    <div class="timeline">
+                        ${periodsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function loadData() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const citiesContainer = document.getElementById('citiesContainer');
+            const totalCount = document.getElementById('totalCount');
+
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            citiesContainer.innerHTML = '';
+
+            try {
+                console.log('Fetching CSV from:', CSV_URL);
+
+                const response = await fetch(CSV_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const csv = await response.text();
+                console.log('CSV loaded, length:', csv.length);
+
+                const data = parseCSV(csv);
+                console.log('Objects count:', data.length);
+
+                const cities = groupByCity(data);
+                console.log('Cities:', cities);
+
+                totalCount.textContent = data.length;
+
+                cities.forEach(city => {
+                    citiesContainer.innerHTML += renderCity(city);
+                });
+
+                loading.style.display = 'none';
+
+            } catch (err) {
+                console.error('Error loading data:', err);
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                document.getElementById('errorMessage').textContent = err.message;
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

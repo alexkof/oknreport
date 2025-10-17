@@ -3,166 +3,878 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мониторинг ОКН - Каменск-Уральский</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>Каменск-Уральский - Культурное наследие</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Заголовок */
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .okn-logo {
+            font-size: 120px;
+            font-weight: 900;
+            color: #d32f2f;
+            margin-right: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(45deg, #c62828, #f44336);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-block {
+            flex: 1;
+        }
+
+        .title {
+            font-size: 72px;
+            font-weight: 900;
+            color: #1a1a1a;
+            line-height: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .quote-mark {
+            color: #2196f3;
+            font-size: 72px;
+            margin-right: 20px;
+        }
+
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            gap: 40px;
+        }
+
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .stats-block {
+            margin-bottom: 30px;
+        }
+
+        .stats-number {
+            font-size: 72px;
+            font-weight: 900;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .stats-text {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .view-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn.active {
+            background: #2196f3;
+            color: white;
+            border-color: #2196f3;
+        }
+
+        .btn:hover {
+            background: #f5f5f5;
+        }
+
+        .btn.active:hover {
+            background: #1976d2;
+        }
+
+        /* Фильтры состояния */
+        .filters {
+            margin-bottom: 30px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border-radius: 16px;
+            border: 1px solid #ddd;
+            background: white;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1976d2;
+        }
+
+        .status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-count {
+            margin-left: 4px;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+
+        .good { background: #4caf50; }
+        .normal { background: #ff9800; }
+        .bad { background: #f44336; }
+        .ruins { background: #795548; }
+        .none { background: #9e9e9e; }
+
+        /* Карта с иконками */
+        .map-container {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .timeline {
+            margin-bottom: 20px;
+        }
+
+        .period {
+            margin-bottom: 25px;
+        }
+
+        .period-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .icons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .heritage-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .heritage-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Цвета иконок по состоянию */
+        .icon-good { background: #4caf50; }
+        .icon-normal { background: #ff9800; }
+        .icon-bad { background: #f44336; }
+        .icon-ruins { background: #795548; }
+        .icon-none { background: #9e9e9e; }
+        .icon-no-data { background: #bdbdbd; }
+        .icon-unknown { background: #607d8b; }
+
+        /* Типы зданий - SVG иконки */
+        .heritage-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+        
+        /* Размеры для специфичных иконок */
+        .heritage-icon.gate svg {
+            width: 18px;
+            height: 18px;
+            margin-top: 4px; /* выравнивание по низу */
+        }
+        
+        .heritage-icon.hut svg {
+            width: 18px;
+            height: 18px;
+            margin-top: 4px; /* выравнивание по низу */
+        }
+        
+        .heritage-icon.palace svg {
+            width: 26px;
+            height: 26px;
+            margin: -2px; /* увеличиваем размер, уменьшаем отступы */
+        }
+        
+        .church::before { 
+            content: '';
+        }
+        .house::before { 
+            content: '';
+        }
+        .factory::before { 
+            content: '';
+        }
+        .monument::before { 
+            content: '';
+        }
+        .school::before { 
+            content: '';
+        }
+        .hospital::before { 
+            content: '';
+        }
+        .theater::before { 
+            content: '';
+        }
+        .museum::before { 
+            content: '';
+        }
+        .palace::before { 
+            content: '';
+        }
+        .apartment::before { 
+            content: '';
+        }
+        .barn::before { 
+            content: '';
+        }
+        .gate::before { 
+            content: '';
+        }
+        .bridge::before { 
+            content: '';
+        }
+        .ensemble::before { 
+            content: '';
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .okn-logo {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .title {
+                font-size: 48px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Заголовок -->
-    <header class="header">
-        <div class="container">
-            <div class="logo-section">
-                <div class="logo">ОКН</div>
-                <div class="city-info">
-                    <h1>КАМЕНСК-УРАЛЬСКИЙ</h1>
-                    <p class="founded">1682 год основания</p>
+    <div class="container">
+        <!-- Заголовок -->
+        <div class="header">
+            <div class="okn-logo">ОКН</div>
+            <div class="title-block">
+                <div style="display: flex; align-items: flex-start;">
+                    <span class="quote-mark">«</span>
+                    <div>
+                        <div class="title">КАМЕНСК-<br>УРАЛЬСКИЙ</div>
+                        <div class="subtitle">1682 год основания</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
 
-    <!-- Основной контент -->
-    <main class="main">
-        <div class="container">
-            <!-- Статистика -->
-            <section class="stats-section">
-                <div class="total-stats">
-                    <div class="total-number" id="totalObjects">0</div>
-                    <div class="total-label">
-                        ОБЪЕКТ<br>
-                        КУЛЬТУРНОГО<br>
-                        НАСЛЕДИЯ
-                    </div>
+        <div class="main-content">
+            <!-- Боковая панель -->
+            <div class="sidebar">
+                <!-- Статистика -->
+                <div class="stats-block">
+                    <div class="stats-number">131</div>
+                    <div class="stats-text">ОБЪЕКТ<br>КУЛЬТУРНОГО<br>НАСЛЕДИЯ</div>
                 </div>
-                <div class="status-stats">
-                    <div class="status-item good">
-                        <div class="status-dot"></div>
-                        <span class="status-label">Хорошее</span>
-                        <span class="status-count" id="goodCount">0</span>
-                    </div>
-                    <div class="status-item normal">
-                        <div class="status-dot"></div>
-                        <span class="status-label">Нормальное</span>
-                        <span class="status-count" id="normalCount">0</span>
-                    </div>
-                    <div class="status-item bad">
-                        <div class="status-dot"></div>
-                        <span class="status-label">Плохое</span>
-                        <span class="status-count" id="badCount">0</span>
-                    </div>
-                    <div class="status-item ruins">
-                        <div class="status-dot"></div>
-                        <span class="status-label">Руины</span>
-                        <span class="status-count" id="ruinsCount">0</span>
-                    </div>
-                    <div class="status-item not-exists">
-                        <div class="status-dot"></div>
-                        <span class="status-label">Не существует</span>
-                        <span class="status-count" id="notExistsCount">0</span>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Фильтры и управление -->
-            <section class="controls-section">
+                <!-- Кнопки просмотра -->
+                <div class="view-buttons">
+                    <button class="btn">На карте</button>
+                    <button class="btn active">Списком</button>
+                </div>
+
+                <!-- Фильтры -->
                 <div class="filters">
-                    <button class="filter-tab active" data-filter="condition">Состояние</button>
-                    <button class="filter-tab" data-filter="material">Материал</button>
-                </div>
-                <div class="view-controls">
-                    <button class="view-btn" data-view="map">На карте</button>
-                    <button class="view-btn active" data-view="list">Списком</button>
-                </div>
-            </section>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active">Состояние</button>
+                        <button class="filter-btn">Материал</button>
+                    </div>
 
-            <!-- Индикатор загрузки -->
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <p>Загрузка данных...</p>
+                    <!-- Легенда состояния -->
+                    <div class="status-legend">
+                        <div class="status-item">
+                            <div class="status-dot good"></div>
+                            <span>Хорошее</span>
+                            <span class="status-count">11</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot normal"></div>
+                            <span>Нормальное</span>
+                            <span class="status-count">23</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot bad"></div>
+                            <span>Плохое</span>
+                            <span class="status-count">16</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot ruins"></div>
+                            <span>Руины</span>
+                            <span class="status-count">2</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot none"></div>
+                            <span>Не существует</span>
+                            <span class="status-count">5</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Сообщение об ошибке -->
-            <div id="error" class="error" style="display: none;">
-                <div class="error-content">
-                    <h3>Ошибка загрузки данных</h3>
-                    <p id="errorMessage">Не удалось загрузить данные. Проверьте подключение к интернету.</p>
-                    <button onclick="loadData()" class="retry-btn">Повторить</button>
-                </div>
-            </div>
-
-            <!-- Сетка объектов -->
-            <section class="objects-section">
+            <!-- Основная карта с иконками -->
+            <div class="map-container">
                 <div class="timeline">
-                    <div class="period-group" data-period="before-1800">
-                        <h3 class="period-title">до 1800 года</h3>
-                        <div class="objects-grid" id="period-before-1800"></div>
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <p>Загружаем данные...</p>
                     </div>
-                    
-                    <div class="period-group" data-period="1800-1850">
-                        <h3 class="period-title">1800—1850</h3>
-                        <div class="objects-grid" id="period-1800-1850"></div>
-                    </div>
-                    
-                    <div class="period-group" data-period="1850-1880">
-                        <h3 class="period-title">1850—1880</h3>
-                        <div class="objects-grid" id="period-1850-1880"></div>
-                    </div>
-                    
-                    <div class="period-group" data-period="1880-1900">
-                        <h3 class="period-title">1880—1900</h3>
-                        <div class="objects-grid" id="period-1880-1900"></div>
-                    </div>
-                    
-                    <div class="period-group" data-period="1900-1940">
-                        <h3 class="period-title">1900—1940</h3>
-                        <div class="objects-grid" id="period-1900-1940"></div>
-                    </div>
-                    
-                    <div class="period-group" data-period="after-1940">
-                        <h3 class="period-title">после 1940</h3>
-                        <div class="objects-grid" id="period-after-1940"></div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Модальное окно с деталями объекта -->
-    <div id="objectModal" class="modal" style="display: none;">
-        <div class="modal-overlay" onclick="closeModal()"></div>
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <div class="modal-header">
-                <div class="modal-icon">
-                    <img id="modalIcon" src="" alt="" />
-                </div>
-                <div class="modal-title">
-                    <h2 id="modalTitle">Название объекта</h2>
-                    <p id="modalPeriod">период</p>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="modal-info">
-                    <p><strong>Адрес:</strong> <span id="modalAddress">г. Каменск-Уральский, ул. Ленина, д. 95</span></p>
-                    <p><strong>Статус:</strong> <span id="modalStatus">Готово</span></p>
-                    <p><strong>Год постройки:</strong> <span id="modalYear">XIX век</span></p>
-                </div>
-                <div class="modal-photo">
-                    <img id="modalPhoto" src="" alt="Фотография объекта" />
-                    <p class="photo-caption">№ <span id="modalNumber">661710747660005</span> в реестре ОКН</p>
-                </div>
-                <div class="modal-actions">
-                    <a id="modalTelegramLink" href="#" target="_blank" class="btn-telegram">
-                        📱 Мониторинг в телеграм
-                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="test-data.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Конфигурация
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT3DBHs_v4JtsQWRJRwrj4MR81zV8YgK5uH3zr0LkhsjD-vJyjWHO0bQocoZWZz621XbhkXAzTXKu0B/pub?output=csv';
+
+        // Маппинг иконок из колонки "Иконка" на типы SVG
+        const iconMapping = {
+            'Мост': 'bridge',
+            'Церковь': 'church', 
+            'Дворец': 'palace',
+            'Домик': 'house',
+            'Многоэтажка': 'highrise',
+            'Ворота': 'gate',
+            'Сарай': 'barn',
+            'Ансамбль': 'ensemble',
+            'Изба': 'hut'
+        };
+
+        // Маппинг состояний
+        function getCondition(condition) {
+            // Если состояние пустое или отсутствует
+            if (!condition || condition.trim() === '') return 'no-data';
+            
+            const conditionLower = condition.toLowerCase().trim();
+            
+            // Логируем для отладки
+            console.log(`Обрабатываем состояние: "${condition}" → "${conditionLower}"`);
+            
+            // Хорошее состояние
+            if (conditionLower.includes('нормальное') || 
+                conditionLower.includes('хорошее') ||
+                conditionLower.includes('удовлетворительное')) return 'good';
+            
+            // Плохое состояние - расширяем варианты
+            if (conditionLower.includes('неудовлетворительное') || 
+                conditionLower.includes('плохое') ||
+                conditionLower.includes('плохо') ||
+                conditionLower.includes('аварийное') ||
+                conditionLower.includes('критическое') ||
+                conditionLower.includes('требует ремонта') ||
+                conditionLower.includes('ветхое')) return 'bad';
+            
+            // Руины и разрушения
+            if (conditionLower.includes('частично разрушен') || 
+                conditionLower.includes('руины') || 
+                conditionLower.includes('разрушена') ||
+                conditionLower.includes('разрушен') ||
+                conditionLower.includes('разрушено')) return 'ruins';
+                
+            // Не существует
+            if (conditionLower.includes('не осталось') || 
+                conditionLower.includes('утрачен') ||
+                conditionLower.includes('не существует') ||
+                conditionLower.includes('снесен') ||
+                conditionLower.includes('снесено')) return 'none';
+            
+            // Если состояние есть, но не распознано
+            console.warn(`Нераспознанное состояние: "${condition}"`);
+            return 'unknown';
+        }
+
+
+        // Функция для получения значения из колонки по названию заголовка
+        function getColumnValue(row, headers, columnName) {
+            const columnIndex = headers.findIndex(header => 
+                header.toLowerCase().trim() === columnName.toLowerCase().trim()
+            );
+            
+            if (columnName.toLowerCase() === 'состояние') {
+                console.log('Отладка для состояния:');
+                console.log('  Ищем колонку:', columnName);
+                console.log('  В заголовках:', headers);
+                console.log('  Найден индекс:', columnIndex);
+                console.log('  Строка данных:', row);
+                console.log('  Значение по индексу:', row[columnIndex]);
+            }
+            
+            return columnIndex !== -1 ? (row[columnIndex] || '') : '';
+        }
+
+        // Функция для парсинга JSON данных от Google Sheets
+        function parseGoogleSheetsJson(jsonData) {
+            if (!jsonData.table || !jsonData.table.rows) {
+                console.error('Неверный формат данных');
+                return [];
+            }
+            
+            const rows = jsonData.table.rows;
+            const data = [];
+            
+            // Получаем заголовки из первой строки
+            if (rows.length === 0) return [];
+            
+            const headers = rows[0].c ? rows[0].c.map(cell => cell && cell.v ? cell.v.toString() : '') : [];
+            console.log('Заголовки:', headers);
+            
+            // Обрабатываем остальные строки
+            for (let i = 1; i < rows.length; i++) {
+                const row = {};
+                const cells = rows[i].c || [];
+                
+                headers.forEach((header, index) => {
+                    const cell = cells[index];
+                    row[header] = cell && cell.v !== null ? cell.v.toString() : '';
+                });
+                
+                data.push(row);
+            }
+            
+            return data;
+        }
+
+        // Функция для анализа данных
+        function analyzeData(data, headers) {
+            const stats = { total: 0, good: 0, normal: 0, bad: 0, ruins: 0, none: 0, unknown: 0, 'no-data': 0 };
+            const objects = [];
+            const uniqueStatuses = new Set();
+            const uniqueIcons = new Set();
+            
+            console.log('Анализируем данные с заголовками:', headers);
+            
+            data.forEach((row, index) => {
+                const cityValue = getColumnValue(row, headers, 'Город');
+                console.log(`Строка ${index + 1}:`, row, 'Город:', cityValue);
+                
+                // Фильтруем только по Каменск-Уральскому
+                if (cityValue && cityValue.trim() !== '' && 
+                    (cityValue.toLowerCase().includes('каменск') || 
+                     cityValue.toLowerCase().includes('kamensk') || 
+                     cityValue === 'Каменск-Уральский')) {
+                    stats.total++;
+                    
+                    const conditionValue = getColumnValue(row, headers, 'Состояние');
+                    const iconValue = getColumnValue(row, headers, 'Иконка');
+                    uniqueStatuses.add(conditionValue);
+                    uniqueIcons.add(iconValue);
+                    
+                    console.log('Состояние из таблицы:', `"${conditionValue}"`, '→ результат:', getCondition(conditionValue));
+                    console.log('Иконка из таблицы:', `"${iconValue}"`, '→ маппинг:', iconMapping[iconValue] || 'house');
+                    
+                    const object = {
+                        name: getColumnValue(row, headers, 'Название') || 'Объект культурного наследия',
+                        year: parseInt(getColumnValue(row, headers, 'Год') || '0'),
+                        condition: getCondition(conditionValue),
+                        icon: iconMapping[iconValue] || 'house',
+                        iconOriginal: iconValue,
+                        address: getColumnValue(row, headers, 'Адрес') || ''
+                    };
+                    
+                    objects.push(object);
+                    
+                    if (stats.hasOwnProperty(object.condition)) {
+                        stats[object.condition]++;
+                    }
+                }
+            });
+            
+            console.log('Итоговая статистика:', stats);
+            console.log('Найдено объектов для Каменск-Уральского:', objects.length);
+            console.log('Первые 3 объекта:', objects.slice(0, 3));
+            console.log('Все уникальные состояния из таблицы:', Array.from(uniqueStatuses));
+            console.log('Все уникальные иконки из таблицы:', Array.from(uniqueIcons));
+            console.log('Маппинг иконок:', iconMapping);
+            
+            // Показываем детальную разбивку по состояниям
+            console.log('📊 Детальная статистика по состояниям:');
+            console.log(`✅ Хорошее/удовлетворительное: ${stats.good}`);
+            console.log(`🔶 Нормальное: ${stats.normal}`);
+            console.log(`❌ Плохое/неудовлетворительное: ${stats.bad}`);
+            console.log(`🧱 Руины/разрушено: ${stats.ruins}`);
+            console.log(`⚫ Не существует/снесено: ${stats.none}`);
+            console.log(`⚪ Нет данных о состоянии: ${stats['no-data']}`);
+            console.log(`❓ Нераспознанное состояние: ${stats.unknown}`);
+            
+            return { stats, objects };
+        }
+
+        // Функция для обновления статистики
+        function updateStatistics(stats) {
+            document.querySelector('.stats-number').textContent = stats.total;
+            
+            // Обновляем счетчики в легенде
+            const statusItems = document.querySelectorAll('.status-item');
+            statusItems[0].querySelector('.status-count').textContent = stats.good;
+            statusItems[1].querySelector('.status-count').textContent = stats.normal;
+            statusItems[2].querySelector('.status-count').textContent = stats.bad;
+            statusItems[3].querySelector('.status-count').textContent = stats.ruins;
+            statusItems[4].querySelector('.status-count').textContent = stats.none;
+            
+            // Показываем дополнительную статистику в консоли
+            console.log('📊 Подробная статистика:');
+            console.log(`✅ Хорошее: ${stats.good}`);
+            console.log(`🔶 Удовлетворительное: ${stats.normal}`);
+            console.log(`❌ Плохое: ${stats.bad}`);
+            console.log(`🧱 Руины: ${stats.ruins}`);
+            console.log(`⚫ Не существует: ${stats.none}`);
+            console.log(`⚪ Нет данных о состоянии: ${stats['no-data']}`);
+            console.log(`❓ Нераспознанное состояние: ${stats.unknown}`);
+        }
+
+        // Функция для группировки объектов по периодам
+        function groupObjectsByPeriod(objects) {
+            const periods = {
+                'до 1800 года': [],
+                '1800-1850': [],
+                '1850-1880': [],
+                '1880-1900': [],
+                '1900-1940': [],
+                'после 1940': []
+            };
+
+            objects.forEach(obj => {
+                const year = obj.year;
+                if (year < 1800) {
+                    periods['до 1800 года'].push(obj);
+                } else if (year >= 1800 && year < 1850) {
+                    periods['1800-1850'].push(obj);
+                } else if (year >= 1850 && year < 1880) {
+                    periods['1850-1880'].push(obj);
+                } else if (year >= 1880 && year < 1900) {
+                    periods['1880-1900'].push(obj);
+                } else if (year >= 1900 && year < 1940) {
+                    periods['1900-1940'].push(obj);
+                } else if (year >= 1940) {
+                    periods['после 1940'].push(obj);
+                }
+            });
+
+            return periods;
+        }
+
+        // SVG иконки
+        const svgIcons = {
+            house: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5.68" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <rect x="5.68" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <rect x="9.15" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <rect x="9.15" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <rect x="12.9" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <rect x="12.9" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <rect x="16.41" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <rect x="16.41" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41" fill="currentColor"/>
+                <path d="M22.31,12.21l-1.91-2.45c-.12-.16-.31-.25-.51-.25h-5.37l-2.12-1.69c-.23-.18-.56-.19-.79,0l-2.24,1.7h-5.26c-.2,0-.39.09-.51.25l-1.91,2.45c-.15.19-.18.46-.07.68s.33.36.58.36h.65v9.31c0,.36.29.64.64.64h17.02c.36,0,.64-.29.64-.64v-9.31h.65c.25,0,.47-.14.58-.36s.08-.48-.07-.68ZM19.58,10.8l.91,1.16h-2.88l-1.46-1.16h3.44ZM11.99,9.14l3.06,2.44.49.39h-7.27l1.71-1.3s0,0,0,0l2.01-1.53ZM4.42,10.8h3.25l-1.54,1.16h-2.62l.91-1.16ZM19.87,21.91H4.13v-8.66h15.73v8.66Z" fill="currentColor"/>
+            </svg>`,
+            church: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.74,16.88l-3.39-1.8v-3.31c0-.21-.09-.4-.24-.54l-5.38-4.85v-2.54h.98c.4,0,.72-.32.72-.72s-.32-.72-.72-.72h-.98v-1.24c0-.4-.32-.72-.72-.72s-.72.32-.72.72v1.24h-.98c-.4,0-.72.32-.72.72s.32.72.72.72h.98v2.53l-5.39,4.86c-.15.14-.24.33-.24.54v3.31l-3.39,1.8c-.24.13-.38.37-.38.64v5.33c0,.4.32.72.72.72h18.79c.4,0,.72-.32.72-.72v-5.33c0-.27-.15-.51-.38-.64ZM10.92,22.12c-.12,0-.22-.1-.22-.22v-3.51c0-.72.58-1.3,1.3-1.3s1.3.58,1.3,1.3v3.51c0,.12-.1.22-.22.22h-2.17ZM20.67,22.12h-5.94c0-.07.02-.14.02-.22v-3.51c0-1.52-1.23-2.75-2.75-2.75s-2.75,1.23-2.75,2.75v3.51c0,.07,0,.15.02.22H3.33v-4.17l3.39-1.8c.24-.13.38-.37.38-.64v-3.43l4.9-4.42,4.9,4.42v3.43c0,.27.15.51.38.64l3.39,1.8v4.17Z" fill="currentColor"/>
+            </svg>`,
+            palace: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.2,19.08h-2.14v-5.82h.72c.24,0,.44-.2.44-.44v-2.22c0-.24-.2-.44-.44-.44h-.72v-2.45c0-.17-.1-.33-.26-.4l-7.62-3.48c-.12-.05-.25-.05-.36,0l-7.62,3.48c-.16.07-.26.23-.26.4v2.45h-.77c-.24,0-.44.2-.44.44v2.22c0,.24.2.44.44.44h.77v5.82H1.8c-.24,0-.44.2-.44.44v2.08c0,.24.2.44.44.44h20.41c.24,0,.44-.2.44-.44v-2.08c0-.24-.2-.44-.44-.44ZM16.87,20.07v-6.79h.66s0,6.79,0,6.79h-.66ZM4.81,20.07v-6.8h.71v6.8h-.71ZM11.91,9.31c1.32,0,2.4,1.08,2.4,2.4v7.37h-.54v-2.34c0-1-.81-1.81-1.81-1.81s-1.81.81-1.81,1.81v2.34h-.65v-6.26s0,0,0,0v-1.11c0-1.32,1.08-2.4,2.4-2.4ZM11.03,19.08v-2.34c0-.52.42-.94.94-.94s.94.42.94.94v2.34h-1.87ZM6.4,13.27h.66v6.8h-.66v-6.8ZM7.93,13.26h.71v5.82h-.71v-5.82ZM15.19,13.29h.81s0,5.78,0,5.78h-.81v-5.78ZM18.4,13.28h.79s0,6.24,0,6.24v.56h-.79v-6.79ZM20.34,12.38h-5.15v-1.35h5.15v1.35ZM4.81,7.99l7.19-3.28,7.19,3.28v2.17h-4.39c-.55-1.03-1.64-1.73-2.89-1.73s-2.33.7-2.88,1.73h-4.22v-2.17ZM3.61,11.04h5.03v1.35H3.61v-1.35ZM21.77,21.16H2.23v-1.21h1.71v.56c0,.24.2.44.44.44h3.11c.24,0,.44-.2.44-.44v-.56h1.14s0,0,0,0h5.68s0,0,0,0h1.24v.56c0,.24.2.44.44.44h3.19c.24,0,.44-.2.44-.44v-.56h1.71v1.21Z" fill="currentColor"/>
+                <path d="M11.91,13.89c1.03,0,1.86-.84,1.86-1.86s-.84-1.86-1.86-1.86-1.86.84-1.86,1.86.84,1.86,1.86,1.86ZM11.91,11.04c.55,0,.99.44.99.99s-.44.99-.99.99-.99-.44-.99-.99.44-.99.99-.99Z" fill="currentColor"/>
+            </svg>`,
+            gate: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.91,7.23l-1.61-2.91c-.11-.21-.33-.33-.57-.33H4.26c-.24,0-.45.13-.57.33l-1.61,2.91c-.11.2-.11.44,0,.64.12.2.33.32.56.32h.7v5.41s0,.01,0,.02v4.92h-.31c-.36,0-.65.29-.65.65v2.54c0,.36.29.65.65.65h5.58c.36,0,.65-.29.65-.65v-2.54c0-.36-.29-.65-.65-.65h-.31v-4.76s0-.16,0-.16c0-.98,1.03-1.77,2.29-1.77h2.79c1.26,0,2.28.79,2.28,1.77,0,.01,0,.1,0,.14v4.78h-.31c-.36,0-.65.29-.65.65v2.54c0,.36.29.65.65.65h5.58c.36,0,.65-.29.65-.65v-2.54c0-.36-.29-.65-.65-.65h-.31v-4.78s0-.02,0-.03c0-.04.01-.07.01-.11v-5.43h.7c.23,0,.44-.12.56-.32.12-.2.12-.44,0-.64ZM7.97,21.08H3.69v-1.25h4.28v1.25ZM4.65,18.54v-4.13h2.37v4.13h-2.37ZM13.4,10.56h-2.79c-1.72,0-3.15,1.04-3.5,2.41h-2.46v-4.74h14.7v4.74h-2.45c-.35-1.38-1.79-2.42-3.5-2.42ZM20.3,21.08h-4.28v-1.25h4.28v1.25ZM16.97,18.54v-4.13h2.37v4.13h-2.37ZM4.64,5.28h14.71l.89,1.62H3.75l.89-1.62Z" fill="currentColor"/>
+            </svg>`,
+            monument: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.7,19.29h-.91v-3.61c0-.39-.31-.7-.7-.7h-1.36V4.21c0-.23-.12-.45-.31-.58l-3.06-2.07c-.21-.14-.49-.16-.72-.04-.23.12-.37.36-.37.62v12.84h-1.36c-.39,0-.7.31-.7.7v3.61h-.91c-.39,0-.7.31-.7.7v2.23c0,.39.31.7.7.7h10.4c.39,0,.7-.31.7-.7v-2.23c0-.39-.31-.7-.7-.7ZM11.66,3.45l1.66,1.12v10.11h-1.66V3.45ZM9.61,16.37h5.78v2.63h-5.78v-2.63ZM17,21.52H7.99v-.83h9.01v.83Z" fill="currentColor"/>
+            </svg>`,
+            barn: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.27,16.51l-3.87-2.18-2.84-5.21c-.07-.12-.18-.22-.31-.28l-5.05-2.19c-.16-.07-.35-.07-.51,0l-5.05,2.19c-.13.06-.24.15-.31.28l-2.97,5.43c-.05.09-.08.2-.08.31v6.85c0,.35.29.64.64.64h4.18s0,0,0,0h7.67s0,0,0,0h4.18s.03,0,.04,0c.01,0,.03,0,.04,0h4.04c.35,0,.64-.29.64-.64v-4.59c0-.29-.19-.53-.45-.61ZM18.6,15.9l2.84,1.6v3.56h-2.84v-5.16ZM7.85,21.07l2.09-1.77,2.09,1.77h-4.18ZM13.14,20.33l-2.21-1.87,2.21-1.87v3.73ZM9.94,17.63l-2.09-1.77h4.18l-2.09,1.77ZM8.95,18.47l-2.21,1.87v-3.73l2.21,1.87ZM17.33,21.07h-2.91v-5.84c0-.34-.29-.64-.64-.64h-7.67c-.34,0-.64.29-.64.64v5.84h-2.91v-6.05l2.78-5.1,4.6-1.99,4.6,1.99,2.78,5.1v6.05Z" fill="currentColor"/>
+            </svg>`,
+            bridge: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.38,17.69c-2.24,0-4.1,1.53-4.43,3.51h-1.44c-.33-1.99-2.19-3.51-4.43-3.51s-4.19,1.6-4.45,3.65h-1.41c-.27-2.05-2.16-3.65-4.45-3.65-.35,0-.64.28-.64.64s.28.64.64.64c1.58,0,2.9,1.03,3.16,2.38h-1.47c-.35,0-.64.28-.64.64s.28.64.64.64h6.8c.35,0,.64-.28.64-.64s-.28-.64-.64-.64h-1.35c.26-1.35,1.58-2.38,3.16-2.38,1.77,0,3.22,1.29,3.22,2.88,0,.35.28.64.64.64.03,0,.05,0,.08,0,.03,0,.05,0,.08,0h4.63c.35,0,.64-.28.64-.64s-.28-.64-.64-.64h-1.45c.32-1.28,1.61-2.24,3.13-2.24.35,0,.64-.28.64-.64s-.28-.64-.64-.64Z" fill="currentColor"/>
+                <path d="M1.62,12.96h3.34s0,.03,0,.05v1.34H1.75c-.35,0-.64.28-.64.64s.28.64.64.64h20.63c.35,0,.64-.28.64-.64s-.28-.64-.64-.64h-4v-1.34s0-.03,0-.05h3.89c.35,0,.64-.28.64-.64s-.28-.64-.64-.64H1.62c-.35,0-.64.28-.64.64s.28.64.64.64ZM17.1,13v1.34H6.24v-1.34s0-.03,0-.05h10.87s0,.03,0,.05Z" fill="currentColor"/>
+            </svg>`,
+            highrise: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.81,4.27c0-.35-.29-.63-.64-.63h-8.18c-.35,0-.64.29-.64.64v2.98L3.84,3.7c-.2-.09-.43-.08-.61.04-.18.12-.3.32-.3.54v18.09c0,.35.29.64.64.64h16.87c.17,0,.33-.07.45-.19.12-.12.19-.29.18-.46l-.26-18.09ZM4.2,21.74v-2.39h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-1.76h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-1.76h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-1.76h4.29c.35,0,.64-.29.64-.64s-.29-.64-.64-.64h-4.29v-3.66l6.91,3.26.24,13.18h-7.15ZM12.64,21.74V4.92h6.91l.24,16.82h-7.15Z" fill="currentColor"/>
+                <path d="M18.14,6.43h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/>
+                <path d="M18.14,9.44h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/>
+                <path d="M18.14,12.45h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/>
+                <path d="M18.14,15.46h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/>
+                <path d="M18.14,18.47h-4.3c-.35,0-.64.29-.64.64s.29.64.64.64h4.3c.35,0,.64-.29.64-.64s-.29-.64-.64-.64Z" fill="currentColor"/>
+            </svg>`,
+            ensemble: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.93,17.15l-4.69-5.08c-.12-.13-.28-.2-.46-.2s-.34.07-.46.2l-4.69,5.08c-.17.18-.21.44-.11.67.09.2.27.34.48.37v3.29c0,.34.28.62.62.62h8c.34,0,.62-.28.62-.62v-3.28h.23c.25,0,.47-.15.57-.37.1-.23.05-.49-.11-.67ZM17.78,13.41l3.01,3.26h-6.03l3.01-3.26ZM21,20.85h-6.76v-2.66h6.76v2.66Z" fill="currentColor"/>
+                <path d="M19.14,20.19h.66c.22,0,.4-.16.4-.36v-.91c0-.2-.18-.36-.4-.36h-.66c-.22,0-.4.16-.4.36v.91c0,.2.18.36.4.36Z" fill="currentColor"/>
+                <path d="M15.55,20.19h.66c.22,0,.4-.16.4-.36v-.91c0-.2-.18-.36-.4-.36h-.66c-.22,0-.4.16-.4.36v.91c0,.2.18.36.4.36Z" fill="currentColor"/>
+                <path d="M12.9,13.16c.11-.2.1-.44-.02-.63l-.76-1.18c-.11-.18-.31-.29-.52-.29h-5.07v-1.91c0-.34-.28-.62-.62-.62h-2.28c-.34,0-.62.28-.62.62v1.91h-.37c-.21,0-.41.11-.52.29l-.76,1.18c-.12.19-.13.43-.02.63.11.2.32.32.54.32h.16v7.99c0,.34.28.62.62.62h8.93c.34,0,.62-.28.62-.62v-7.99h.16c.23,0,.44-.12.54-.32ZM4.24,9.77h1.04v1.29h-1.04v-1.29ZM9.76,20.85v-1.59c0-.44-.36-.8-.8-.8s-.8.36-.8.8v1.59H3.27v-3.06h7.69v3.06h-1.19ZM10.95,16.55H3.27v-3.06h7.69v3.06Z" fill="currentColor"/>
+            </svg>`,
+            hut: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.89,20.71h-1.08c.03-.14.05-.29.05-.44,0-.45-.16-.87-.42-1.21.26-.33.42-.75.42-1.21s-.16-.87-.42-1.21c.26-.33.42-.75.42-1.21s-.16-.87-.42-1.21c.26-.33.42-.75.42-1.21,0-.15-.02-.3-.05-.44h.31c.33,0,.63-.21.73-.53.1-.32,0-.66-.28-.86l-3.29-2.41c.02-.06.03-.12.03-.19v-2.85c0-.42-.34-.77-.77-.77s-.77.34-.77.77v1.94l-4.22-3.09c-.27-.2-.64-.2-.91,0L2.63,11.21c-.27.2-.38.54-.28.86.1.32.4.53.73.53h.39c-.03.14-.05.29-.05.44,0,.45.16.87.42,1.21-.26.33-.42.75-.42,1.21s.16.87.42,1.21c-.26.33-.42.75-.42,1.21s.16.87.42,1.21c-.26.33-.42.75-.42,1.21,0,.15.02.3.05.44h-1.37c-.42,0-.77.34-.77.77s.34.77.77.77h19.78c.42,0,.77-.34.77-.77s-.34-.77-.77-.77ZM12.1,6.18l6.67,4.88H5.43l6.67-4.88ZM4.96,20.27c0-.24.2-.44.44-.44.42,0,.77-.34.77-.77s-.34-.77-.77-.77c-.24,0-.44-.2-.44-.44s.2-.44.44-.44c.42,0,.77-.34.77-.77s-.34-.77-.77-.77c-.24,0-.44-.2-.44-.44s.2-.44.44-.44c.42,0,.77-.34.77-.77s-.34-.77-.77-.77c-.24,0-.44-.2-.44-.44s.2-.44.44-.44h13.49c.24,0,.44.2.44.44s-.2.44-.44.44c-.42,0-.77.34-.77.77s.34.77.77.77c.24,0,.44.2.44.44s-.2.44-.44.44c-.42,0-.77.34-.77.77s.34.77.77.77c.24,0,.44.2.44.44s-.2.44-.44.44c-.42,0-.77.34-.77.77s.34.77.77.77c.24,0,.44.2.44.44s-.2.44-.44.44h-3.9v-3.73c0-1.39-1.13-2.52-2.52-2.52h-.83c-1.39,0-2.52,1.13-2.52,2.52v3.73h-3.73c-.24,0-.44-.2-.44-.44ZM10.66,20.71v-3.73c0-.54.44-.98.98-.98h.83c.54,0,.98.44.98.98v3.73h-2.8Z" fill="currentColor"/>
+            </svg>`
+        };
+
+        // Функция для обновления временной шкалы
+        function updateTimeline(objects) {
+            const periods = groupObjectsByPeriod(objects);
+            const timeline = document.querySelector('.timeline');
+            
+            timeline.innerHTML = '';
+            
+            Object.entries(periods).forEach(([periodName, periodObjects]) => {
+                if (periodObjects.length > 0) {
+                    const periodDiv = document.createElement('div');
+                    periodDiv.className = 'period';
+                    
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'period-title';
+                    titleDiv.textContent = periodName;
+                    
+                    const iconsRow = document.createElement('div');
+                    iconsRow.className = 'icons-row';
+                    
+                    periodObjects.forEach(obj => {
+                        const iconDiv = document.createElement('div');
+                        iconDiv.className = `heritage-icon icon-${obj.condition} ${obj.icon}`;
+                        iconDiv.title = `${obj.name} (${obj.year})`;
+                        iconDiv.innerHTML = svgIcons[obj.icon] || svgIcons.house;
+                        iconsRow.appendChild(iconDiv);
+                    });
+                    
+                    periodDiv.appendChild(titleDiv);
+                    periodDiv.appendChild(iconsRow);
+                    timeline.appendChild(periodDiv);
+                }
+            });
+        }
+
+        // Функция для загрузки данных через JSONP
+        function loadDataViaJsonp() {
+            return new Promise((resolve, reject) => {
+                // Создаем уникальное имя callback функции
+                const callbackName = 'googleSheetsCallback_' + Date.now();
+                
+                // Создаем callback функцию
+                window[callbackName] = function(data) {
+                    // Удаляем script элемент и callback функцию
+                    document.head.removeChild(script);
+                    delete window[callbackName];
+                    resolve(data);
+                };
+                
+                // Создаем script элемент для JSONP запроса
+                const script = document.createElement('script');
+                script.onerror = function() {
+                    document.head.removeChild(script);
+                    delete window[callbackName];
+                    reject(new Error('Ошибка загрузки данных'));
+                };
+                
+                // Формируем URL с callback параметром
+                const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&tq&sheet=${encodeURIComponent(SHEET_NAME)}&headers=1`;
+                script.src = url;
+                
+                document.head.appendChild(script);
+            });
+        }
+
+        // Главная функция загрузки данных
+        async function loadData() {
+            try {
+                console.log('Загружаем данные из Google Sheets CSV...');
+                
+                // Пробуем через CORS proxy с новой ссылкой
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const response = await fetch(proxyUrl + encodeURIComponent(CSV_URL));
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                console.log('Получили CSV данные (полный текст):', csvText);
+                
+                // Простой парсинг CSV
+                const lines = csvText.split('\n').filter(line => line.trim());
+                console.log('Количество строк после фильтрации:', lines.length);
+                const data = [];
+                let headers = [];
+                
+                if (lines.length > 1) {
+                    // Правильный парсинг CSV с учетом кавычек
+                    headers = parseCSVLine(lines[0]);
+                    console.log('Все заголовки таблицы:', headers);
+                    console.log('Ищем колонку с состоянием среди:', headers.filter(h => h.toLowerCase().includes('состо')));
+                    
+                    for (let i = 1; i < lines.length; i++) {
+                        const values = parseCSVLine(lines[i]);
+                        data.push(values);
+                    }
+                } else {
+                    throw new Error('Недостаточно данных в CSV файле');
+                }
+                
+                // Функция для правильного парсинга CSV строки
+                function parseCSVLine(line) {
+                    const result = [];
+                    let current = '';
+                    let inQuotes = false;
+                    
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+                        
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            result.push(current.trim());
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    
+                    result.push(current.trim());
+                    return result;
+                }
+                
+                const { stats, objects } = analyzeData(data, headers);
+                
+                console.log('Статистика:', stats);
+                console.log('Объекты:', objects.length);
+                
+                updateStatistics(stats);
+                updateTimeline(objects);
+                
+                console.log('Данные успешно загружены и отображены');
+                
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                
+                // Показываем сообщение об ошибке
+                const timeline = document.querySelector('.timeline');
+                timeline.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #666;">
+                        <p>Не удалось загрузить данные</p>
+                        <p style="font-size: 12px;">${error.message}</p>
+                        <button onclick="loadData()" style="margin-top: 10px; padding: 5px 10px;">Повторить</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Интерактивность для кнопок фильтров
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Интерактивность для кнопок просмотра
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Загружаем данные
+            loadData();
+            
+            // Автообновление каждые 5 минут
+            setInterval(loadData, 5 * 60 * 1000);
+        });
+    </script>
 </body>
 </html>
