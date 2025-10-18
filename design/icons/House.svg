@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
+  <!-- Generator: Adobe Illustrator 29.2.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 116)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #0a0100;
+      }
+    </style>
+  </defs>
+  <rect class="st0" x="5.68" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <rect class="st0" x="5.68" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <rect class="st0" x="9.15" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <rect class="st0" x="9.15" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <rect class="st0" x="12.9" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <rect class="st0" x="12.9" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <rect class="st0" x="16.41" y="14.39" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <rect class="st0" x="16.41" y="18.27" width="1.63" height="2.48" rx=".41" ry=".41"/>
+  <path class="st0" d="M22.31,12.21l-1.91-2.45c-.12-.16-.31-.25-.51-.25h-5.37l-2.12-1.69c-.23-.18-.56-.19-.79,0l-2.24,1.7h-5.26c-.2,0-.39.09-.51.25l-1.91,2.45c-.15.19-.18.46-.07.68s.33.36.58.36h.65v9.31c0,.36.29.64.64.64h17.02c.36,0,.64-.29.64-.64v-9.31h.65c.25,0,.47-.14.58-.36s.08-.48-.07-.68ZM19.58,10.8l.91,1.16h-2.88l-1.46-1.16h3.44ZM11.99,9.14l3.06,2.44.49.39h-7.27l1.71-1.3s0,0,0,0l2.01-1.53ZM4.42,10.8h3.25l-1.54,1.16h-2.62l.91-1.16ZM19.87,21.91H4.13v-8.66h15.73v8.66Z"/>
+</svg>

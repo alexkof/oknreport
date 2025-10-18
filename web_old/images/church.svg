@@ -1,6 +1,15 @@
-<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="8" y="18" width="14" height="10" fill="#4A5568"/>
-  <path d="M15 8 L22 18 L8 18 Z" fill="#4A5568"/>
-  <rect x="13" y="22" width="4" height="6" fill="#E2E8F0"/>
-  <circle cx="15" cy="12" r="1" fill="#4A5568"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Church base -->
+  <rect x="6" y="12" width="12" height="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <!-- Church dome -->
+  <circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <!-- Cross vertical -->
+  <line x1="12" y1="3" x2="12" y2="7" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Cross horizontal -->
+  <line x1="10.5" y1="4.5" x2="13.5" y2="4.5" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Door -->
+  <rect x="10" y="16" width="4" height="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <!-- Windows -->
+  <rect x="7.5" y="14" width="2" height="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <rect x="14.5" y="14" width="2" height="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
 </svg>

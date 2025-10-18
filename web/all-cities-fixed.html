@@ -36,15 +36,24 @@
             box-sizing: border-box;
         }
 
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--background);
             color: var(--text-primary);
             line-height: 1.6;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -102,6 +111,19 @@
             font-size: 1.2rem;
             color: var(--text-secondary);
             font-weight: 500;
+        }
+
+        .test-mode-link {
+            font-size: 1rem;
+            color: #ff9800;
+            text-decoration: underline;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .test-mode-link:hover {
+            opacity: 0.7;
         }
 
         /* Legend */
@@ -190,27 +212,36 @@
         .timeline {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .period {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            align-items: start;
         }
 
         .period-label {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-secondary);
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #e0e0e0;
+            padding-top: 4px;
+        }
+
+        /* Адаптивность - вертикальная раскладка на узких экранах */
+        @media (max-width: 768px) {
+            .period {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
         }
 
         .objects-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 4px;
+            align-items: flex-end;
         }
 
         .heritage-icon {
@@ -218,13 +249,14 @@
             height: 28px;
             border-radius: 3px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             color: white;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
+            padding-bottom: 3px;
         }
 
         .heritage-icon:hover {
@@ -240,11 +272,23 @@
         .heritage-icon.not-exists { background: #9e9e9e; opacity: 0.5; }
         .heritage-icon.not-available { background: #9e9e9e; }
 
-        /* SVG иконки */
+        /* SVG иконки - базовый размер */
         .heritage-icon svg {
             width: 22px;
             height: 22px;
             fill: currentColor;
+        }
+
+        /* Индивидуальные размеры иконок */
+        .heritage-icon svg.icon-hut,
+        .heritage-icon svg.icon-gate {
+            width: 18px;
+            height: 18px;
+        }
+
+        .heritage-icon svg.icon-palace {
+            width: 24px;
+            height: 24px;
         }
 
         /* Loading */
@@ -301,9 +345,66 @@
         }
 
         /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .period {
+                grid-template-columns: 180px 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .period {
+                grid-template-columns: 160px 1fr;
+                gap: 1.25rem;
+            }
+
+            .period-label {
+                font-size: 1.05rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                padding: 1.25rem;
+            }
+
+            .period {
+                grid-template-columns: 140px 1fr;
+                gap: 1rem;
+            }
+
+            .period-label {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .period {
+                grid-template-columns: 120px 1fr;
+                gap: 1rem;
+            }
+
+            .period-label {
+                font-size: 0.95rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
+            }
+
+            .period {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .period-label {
+                font-size: 1rem;
             }
 
             .okn-logo {
@@ -322,9 +423,53 @@
                 font-size: 1.5rem;
             }
 
-            .objects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            .city-header {
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.75rem;
+            }
+
+            .okn-logo {
+                font-size: 2.5rem;
+            }
+
+            .region-name {
+                font-size: 1.5rem;
+            }
+
+            .total-number {
+                font-size: 2rem;
+            }
+
+            .city-name {
+                font-size: 1.25rem;
+            }
+
+            .heritage-icon {
+                width: 24px;
+                height: 24px;
+            }
+
+            .heritage-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .heritage-icon svg.icon-hut,
+            .heritage-icon svg.icon-gate {
+                width: 16px;
+                height: 16px;
+            }
+
+            .heritage-icon svg.icon-palace {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
@@ -399,6 +544,17 @@
     <script>
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR1T7ugA8z7TV4CGgorenfTg3joi3SiDPe0QE_Fjs7_DUHB2qYEAt-5qepZFZe42-udQLV4q9XmXnrw/pub?gid=1292008891&single=true&output=csv';
 
+        // ТЕСТОВЫЙ РЕЖИМ: Ограничивает количество объектов для тестирования
+        // Использование: добавьте ?testMode=true к URL
+        // Пример: http://localhost:8000/all-cities-fixed.html?testMode=true
+        const TEST_MODE_LIMIT = 50; // Количество объектов в тестовом режиме
+
+        // Проверка тестового режима из URL параметров
+        function isTestMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('testMode') === 'true';
+        }
+
         // Периоды времени
         const TIME_PERIODS = [
             { id: 'before-1800', label: 'до 1800 года', min: 0, max: 1799 },
@@ -428,7 +584,7 @@
         // Маппинг названий иконок из CSV в ключи SVG_ICONS
         // КАЖДОМУ ТИПУ СООТВЕТСТВУЕТ РОВНО ОДНА ИКОНКА
         function getIconSVG(iconName) {
-            if (!iconName) return SVG_ICONS['house'];
+            if (!iconName) return addIconClass(SVG_ICONS['house'], 'house');
 
             const name = iconName.trim().toLowerCase();
 
@@ -448,7 +604,12 @@
             };
 
             const iconKey = iconMap[name] || 'house';
-            return SVG_ICONS[iconKey] || SVG_ICONS['house'];
+            return addIconClass(SVG_ICONS[iconKey] || SVG_ICONS['house'], iconKey);
+        }
+
+        // Добавляет класс к SVG элементу
+        function addIconClass(svgString, iconType) {
+            return svgString.replace('<svg', `<svg class="icon-${iconType}"`);
         }
 
         // Парсинг CSV с учетом кавычек
@@ -578,13 +739,17 @@
 
         function renderObject(obj) {
             const name = obj['Название'] || 'Без названия';
-            const status = obj['Состояние'] || '';
+            const address = obj['Адрес'] || '';
+            const status = obj['Состояние'] || 'Не указано';
             const condition = getCondition(status);
             const iconName = obj['Иконка'] || '';
             const iconSVG = getIconSVG(iconName);
 
+            // Формируем тултип с названием, адресом и состоянием
+            const tooltip = `${name}\n${address}\nСостояние: ${status}`;
+
             return `
-                <div class="heritage-icon ${condition}" title="${name}">
+                <div class="heritage-icon ${condition}" title="${tooltip}">
                     ${iconSVG}
                 </div>
             `;
@@ -631,6 +796,7 @@
             const error = document.getElementById('error');
             const citiesContainer = document.getElementById('citiesContainer');
             const totalCount = document.getElementById('totalCount');
+            const testMode = isTestMode();
 
             loading.style.display = 'block';
             error.style.display = 'none';
@@ -638,6 +804,9 @@
 
             try {
                 console.log('Fetching CSV from:', CSV_URL);
+                if (testMode) {
+                    console.log('🧪 TEST MODE ENABLED: Limiting to', TEST_MODE_LIMIT, 'objects');
+                }
 
                 const response = await fetch(CSV_URL);
                 if (!response.ok) {
@@ -647,13 +816,25 @@
                 const csv = await response.text();
                 console.log('CSV loaded, length:', csv.length);
 
-                const data = parseCSV(csv);
+                let data = parseCSV(csv);
                 console.log('Objects count:', data.length);
+
+                // Ограничиваем данные в тестовом режиме
+                if (testMode && data.length > TEST_MODE_LIMIT) {
+                    data = data.slice(0, TEST_MODE_LIMIT);
+                    console.log('🧪 TEST MODE: Limited to', data.length, 'objects');
+                }
 
                 const cities = groupByCity(data);
                 console.log('Cities:', cities);
 
-                totalCount.textContent = data.length;
+                // Отображаем индикатор тестового режима
+                if (testMode) {
+                    const normalModeUrl = window.location.pathname;
+                    totalCount.innerHTML = data.length + ' <span style="color: #ff9800;">(ТЕСТОВЫЙ РЕЖИМ)</span> <a href="' + normalModeUrl + '" target="_blank" class="test-mode-link">→ полная версия</a>';
+                } else {
+                    totalCount.textContent = data.length;
+                }
 
                 cities.forEach(city => {
                     citiesContainer.innerHTML += renderCity(city);

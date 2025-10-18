@@ -1,16 +1,15 @@
-<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Первый объект (слева) -->
-  <rect x="2" y="18" width="6" height="10" fill="#4A5568"/>
-  <path d="M5 14 L8 18 L2 18 Z" fill="#4A5568"/>
-  <rect x="3" y="22" width="2" height="6" fill="#E2E8F0"/>
-  
-  <!-- Второй объект (в центре) -->
-  <rect x="12" y="18" width="6" height="10" fill="#4A5568"/>
-  <path d="M15 14 L18 18 L12 18 Z" fill="#4A5568"/>
-  <rect x="13" y="22" width="2" height="6" fill="#E2E8F0"/>
-  
-  <!-- Третий объект (справа) -->
-  <rect x="22" y="18" width="6" height="10" fill="#4A5568"/>
-  <path d="M25 14 L28 18 L22 18 Z" fill="#4A5568"/>
-  <rect x="23" y="22" width="2" height="6" fill="#E2E8F0"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left building -->
+  <rect x="2" y="14" width="5" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <path d="M1 14 L4.5 9 L8 14" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <!-- Center building (tallest) -->
+  <rect x="8" y="10" width="6" height="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <path d="M7 10 L11 5 L15 10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <!-- Right building -->
+  <rect x="15" y="12" width="5" height="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <path d="M14 12 L17.5 7 L21 12" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <!-- Windows/doors -->
+  <rect x="3" y="17" width="1.5" height="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <rect x="10" y="15" width="2" height="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <rect x="16.5" y="16" width="1.5" height="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
 </svg>
